@@ -9,5 +9,5 @@ DEPENDPATH += . headers source
 INCLUDEPATH += . headers
 
 # Input
-HEADERS += headers/GLWidget.h headers/Window.h
-SOURCES += source/GLWidget.cpp source/main.cpp source/Window.cpp
+HEADERS += headers/GLWidget.h headers/Window.h headers/Vector.h
+SOURCES += source/GLWidget.cpp source/main.cpp source/Window.cpp source/Vector.cpp
