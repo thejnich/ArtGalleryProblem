@@ -1,9 +1,8 @@
 #include "GLWidget.h"
 
-
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
-	polygon = new vector<Vector>;
+	polygon = new SimplePolygon();
 	timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
 	timer->start(REFRESH_RATE);
@@ -75,20 +74,8 @@ void GLWidget::paintGL()
 			  0, 0, 0,		// look-at
 			  0, 1, 0);		// up-vector
 	
-	glPointSize(10.0);
-	glColor3f(1.0,1.0,0);
-	glBegin(GL_POINTS);
-	for (vector<Vector>::iterator it = polygon->begin(); it != polygon->end(); ++it) {
-		glVertex3f(it->x, it->y, it->z);
-	}
-	glEnd();
-
-	glBegin(GL_LINE_LOOP);
-	for (vector<Vector>::iterator it = polygon->begin(); it != polygon->end(); ++it) {
-		glVertex3f(it->x, it->y, it->z);
-	}
-	glEnd();
-
+	polygon->DrawPolygon();
+	
 	glFlush();
 }
 
@@ -102,20 +89,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 		float wnew = 1.0f;
 
 		Vector v = Vector(xnew,ynew,znew,wnew);
-		int closestPointIndex = findPoint(v);
-		
-		if(event->button() == Qt::LeftButton) {
-			if(closestPointIndex == -1)
-				polygon->push_back(v);
-			else {
-				(*polygon)[closestPointIndex].x = xnew;
-				(*polygon)[closestPointIndex].y = ynew;
-			}
-		}
-		else { 
-			if(closestPointIndex != -1) 
-				polygon->erase(polygon->begin() + closestPointIndex);
-		}
+	
+		polygon->Update(v, !(event->button() == Qt::LeftButton));
 	}
 }
 
@@ -138,46 +113,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 			ynew = 1.0f;
 
 		Vector v = Vector(xnew,ynew,znew,wnew);
-		int closestIndex = findPoint(v);
-
-		if(closestIndex != -1) {
-			(*polygon)[closestIndex].x = xnew;
-			(*polygon)[closestIndex].y = ynew;
-		}
+		polygon->Update(v, false);
 	}
 }
-
-int GLWidget::findPoint(Vector v)
-{
-	if (polygon->size() == 0) {
-		return -1;
-	}
-
-	// Find the point closest
-	int index = 0;
-	float smallestDistance = Vector::getDistance(v, (*polygon)[index]);
-	float dist;
-	// loop through all polygon, tracking which is closest
-	for (uint i = 1; i < polygon->size(); i++)
-	{
-		dist = Vector::getDistance(v, (*polygon)[i]);
-		if (dist < smallestDistance)
-		{
-			index = i;
-			smallestDistance = dist;
-		}
-	}
-
-	// Threshold the distance so we dont get anything too far out
-	if (smallestDistance > MAX_DIST)
-		index = -1;
-
-	return index;
-}       
 
 void GLWidget::clearPolygon()
 {
 	if(NULL == polygon)
 		return;
-	polygon->clear();	
+	polygon->Clear();
 }

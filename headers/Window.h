@@ -26,7 +26,7 @@ private:
 	QHBoxLayout *mainLayout;
 	QVBoxLayout *controlLayout;
 
-	QPushButton *clearPolyButton
+	QPushButton *clearPolyButton;
 };
 
 #endif /* _WINDOW_H */

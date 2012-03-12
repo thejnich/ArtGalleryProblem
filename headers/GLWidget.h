@@ -12,11 +12,11 @@
 #include <vector>
 
 #include "Vector.h"
+#include "SimplePolygon.h"
 
 #define WIDGET_HEIGHT 800
 #define WIDGET_WIDTH 1200
 #define REFRESH_RATE 1
-#define MAX_DIST 0.1
 
 using namespace std;
 using std::vector;
@@ -45,10 +45,7 @@ protected:
 	
 private:
 	QTimer *timer;
-	vector<Vector> *polygon;
-
-	int findPoint(Vector v);
-
+	SimplePolygon *polygon;
 };
 
 #endif  /* _GLWIDGET_H */

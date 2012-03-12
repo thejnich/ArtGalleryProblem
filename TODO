@@ -1,3 +1,4 @@
+modify so that polygon is always a simple polygon
 implement triangulation algorithm
 implement 3-coloring
 place guards based on coloring
