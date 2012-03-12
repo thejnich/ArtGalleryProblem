@@ -24,6 +24,9 @@ private:
 	QWidget *centralWidget;
 	GLWidget *glWidget;
 	QHBoxLayout *mainLayout;
+	QVBoxLayout *controlLayout;
+
+	QPushButton *clearPolyButton
 };
 
 #endif /* _WINDOW_H */

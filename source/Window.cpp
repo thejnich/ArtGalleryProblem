@@ -11,7 +11,8 @@
 
 Window::Window(QWidget *parent) : QMainWindow(parent)
 {
-	setWindowTitle(tr("Basic QT skeleton"));
+	// init
+	setWindowTitle(tr("Art Gallery Problem"));
 	
 	glWidget = new GLWidget;
 
@@ -19,8 +20,18 @@ Window::Window(QWidget *parent) : QMainWindow(parent)
 	setCentralWidget(centralWidget);
 	
 	mainLayout = new QHBoxLayout;
-	
+	controlLayout = new QVBoxLayout;
+
+	// set up buttons
+	clearPolyButton = new QPushButton("Clear");
+	connect(clearPolyButton, SIGNAL(clicked()), glWidget, SLOT(clearPolygon()));
+
+	// add controls to controlLayout
+	controlLayout->addWidget(clearPolyButton);
+
+	// add main widgets and layouts
 	mainLayout->addWidget(glWidget);
+	mainLayout->addLayout(controlLayout);
 	centralWidget->setLayout(mainLayout);
 }
 

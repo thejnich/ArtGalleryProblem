@@ -11,9 +11,12 @@
 #include <QtOpenGL>
 #include <vector>
 
+#include "Vector.h"
+
 #define WIDGET_HEIGHT 800
 #define WIDGET_WIDTH 1200
 #define REFRESH_RATE 1
+#define MAX_DIST 0.1
 
 using namespace std;
 using std::vector;
@@ -29,6 +32,7 @@ public:
 	QSize minimumSizeHint() const;
 	
 public slots:
+	void clearPolygon();
 
 signals:
 
@@ -41,6 +45,9 @@ protected:
 	
 private:
 	QTimer *timer;
+	vector<Vector> *polygon;
+
+	int findPoint(Vector v);
 
 };
 
