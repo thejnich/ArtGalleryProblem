@@ -14,3 +14,4 @@ placed at vertices of the polygon, they can see 360 degrees, cannot move), in a
 polygon with no holes. This is accomplished by triangulating the polygon, then
 three coloring the triangulation, picking a color, and placing guards at these
 vertices. This gives you floor(n/3) guards for an n vertex polygon.
+See docs/ArtGallery_NoHoles.pdf for detailed description/proof.
