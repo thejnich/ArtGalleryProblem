@@ -86,7 +86,7 @@ void SimplePolygon::Update(Vector v, bool remove)
 	}
 	
 	// sort points
-	std::sort(vertices->begin(), vertices->end(), comparePolarAngle);
+//	std::sort(vertices->begin(), vertices->end(), comparePolarAngle);
 }
 
 
