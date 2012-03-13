@@ -1,4 +1,5 @@
 modify so that polygon is always a simple polygon
+	current implementation is not correct!
 implement triangulation algorithm
 implement 3-coloring
 place guards based on coloring
