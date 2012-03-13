@@ -15,7 +15,7 @@
 // default constructor
 Vector::Vector()
 {
-	x=y=z=w=0.0f;
+	x=y=z=w=angle=0.0f;
 }
 
 /*
@@ -28,7 +28,21 @@ Vector::Vector (float newX, float newY, float newZ, float newW)
 	y=newY;
 	z=newZ;
 	w=newW;
+	angle = getAngle(this);
 }
+
+void Vector::update(float newX, float newY)
+{
+	x = newX;
+	y = newY;
+	angle = getAngle(this);
+}
+
+float Vector::getx() {return x;}
+float Vector::gety() {return y;}
+float Vector::getz() {return z;}
+float Vector::getw() {return w;}
+float Vector::getangle() {return angle;}
 
 Vector Vector::operator+ (Vector v)
 {
@@ -71,6 +85,11 @@ float Vector::norm()
 float Vector::getAngle (Vector v1, Vector v2)
 {
 	return acos((v1.x*v2.x + v1.y*v2.y + v1.z*v2.z)/(v1.norm()*v2.norm()));
+}
+
+float Vector::getAngle(Vector* const v)
+{
+	return acos((1.f*(v->getx()))/(v->norm()));
 }
 
 // returns distance between two points, represented by Vector objects

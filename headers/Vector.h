@@ -19,12 +19,15 @@
 class Vector
 {
 public:
-	
-	float x, y, z, w;
-
 	Vector();
 	Vector (float newX, float newY, float newZ, float newW);
 
+	void update(float x, float y);
+	float getx();
+	float gety();
+	float getz();
+	float getw();
+	float getangle();
 	Vector operator+ (Vector v);
 	Vector operator- (Vector v);
 	Vector operator* (float s);
@@ -33,9 +36,13 @@ public:
 
 	static Vector crossProduct (Vector v1, Vector v2);
 	static float getAngle (Vector v1, Vector v2);
+	static float getAngle (Vector* const v);
 	static float getDistance (Vector v1, Vector v2);
 
 	float norm();
+
+private:
+	float x, y, z, w, angle;
 };
 
 #endif /* VECTOR_H */

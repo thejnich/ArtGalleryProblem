@@ -17,13 +17,13 @@ void SimplePolygon::DrawPolygon()
 
 	glBegin(GL_POINTS);
 	for(vector<Vector>::iterator it = vertices->begin(); it != vertices->end(); ++it) {
-		glVertex3f(it->x, it->y, it->z);
+		glVertex3f(it->getx(), it->gety(), it->getz());
 	}
 	glEnd();
 
 	glBegin(GL_LINE_LOOP);
 	for(vector<Vector>::iterator it = vertices->begin(); it != vertices->end(); ++it) {
-		glVertex3f(it->x, it->y, it->z);
+		glVertex3f(it->getx(), it->gety(), it->getz());
 	}
 	glEnd();
 }
@@ -76,8 +76,7 @@ void SimplePolygon::Update(Vector v, bool remove)
 			vertices->push_back(v);
 		}
 		else {
-			(*vertices)[closestPointIndex].x = v.x;
-			(*vertices)[closestPointIndex].y = v.y;
+			(*vertices)[closestPointIndex].update(v.getx(), v.gety());
 		}
 	}
 	
