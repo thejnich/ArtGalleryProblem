@@ -89,7 +89,11 @@ float Vector::getAngle (Vector v1, Vector v2)
 
 float Vector::getAngle(Vector* const v)
 {
-	return acos((1.f*(v->getx()))/(v->norm()));
+	float ang = acos(v->getx()/v->norm());
+	if(v->gety() < 0)
+		ang = 2*PI - ang;
+
+	return ang;
 }
 
 // returns distance between two points, represented by Vector objects

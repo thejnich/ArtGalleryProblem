@@ -75,7 +75,17 @@ void GLWidget::paintGL()
 			  0, 1, 0);		// up-vector
 	
 	polygon->DrawPolygon();
-	
+
+	// draw axis
+	glColor3f(1.f,1.f,1.f);
+	glBegin(GL_LINES);
+	glVertex3f(0.f,1.f,0.f);
+	glVertex3f(0.f,-1.f,0.f);
+	glVertex3f(-1.f,0.f,0.f);
+	glVertex3f(1.f,0.f,0.f);
+	glEnd();
+
+
 	glFlush();
 }
 

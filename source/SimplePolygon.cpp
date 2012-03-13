@@ -1,5 +1,10 @@
 #include "SimplePolygon.h"
 
+bool comparePolarAngle(Vector a, Vector b)
+{
+	return a.getangle() < b.getangle();
+}
+
 SimplePolygon::SimplePolygon()
 {
 	vertices = new vector<Vector>();
@@ -80,5 +85,8 @@ void SimplePolygon::Update(Vector v, bool remove)
 		}
 	}
 	
-
+	// sort points
+	std::sort(vertices->begin(), vertices->end(), comparePolarAngle);
 }
+
+
