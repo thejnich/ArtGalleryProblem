@@ -129,14 +129,10 @@ void SimplePolygon::Update(Vector v, bool remove)
  * have different color, so each triangle will have a vertex of 
  * each color
  */
- /* TODO This fucking peice of garbage is not currently working!!! 
-  * BUGFOUND: this alg assums each successive triangle shares an
-  * edge with the previous triangle. This IS NOT guaranteed by the
-  * current triangulation implementation, so the alg fails in certain
-  * situations. My need a half edge data structure or something so 
-  * adjacent tris can be walked for the coloring
+ /* TODO Almost working, but not quite
+  * Am now just brute forcing, but still not working
   */ 
-bool SimplePolygon::threeColor(const vector<Vector*> &tris)
+bool SimplePolygon::threeColor(vector<Vector*> &tris)
 {
 
 	printf("\n\nEntering threeColor this peice of shit\n");
@@ -147,35 +143,66 @@ bool SimplePolygon::threeColor(const vector<Vector*> &tris)
 		tris[i]->setColor(0);
 	}
 
-	for(int i = 0; i < (int)tris.size()-2; i+=3) {
-	
-		int sum = 0;
-		int toColor;
-		Vector *v;
-		for(int j = 0; j < 3; ++j) {
-			v = tris[i+j];
-			if(v->getColor() == 0)
-				toColor = j;
-			else
-				sum += v->getColor();
-		}
-		// if the sum is 0, this is the first tri, so we just color them 1,2,3
-		if(sum == 0) {
+	int numTris = tris.size() / 3;
+
+	// color the first triangle
+	for(int i = 0; i < 3; ++i) {
+		tris[i]->setColor(i+1);
+	}
+
+	int colored = 1;
+
+
+	Vector **lastColored = &tris[0];
+	Vector **current = &tris[3];
+	// loop until we have colored all the triangles
+	while( colored != numTris ) {
+		
+		// check if current is adjacent (shares edge) with lastColored
+		if(adjacent(lastColored, current)) {
+			// if adjacent, then we color the remaining vertex of current
+			int sum = 0;
+			int toColor;
+			Vector *v;
 			for(int j = 0; j < 3; ++j) {
-				tris[i+j]->setColor(j+1);
+				v = *(current+j); 
+				if(v->getColor() == 0)
+					toColor = j;
+				else
+					sum += v->getColor();
 			}
-		}
-		// all other cases, only one vertex should be uncolored
-		// the other two are either sum = 1+2; 1+3; 2+3
-		// in each case this vertex should be 6-sum
-		else {
+
 			if( (6-sum) <= 0 || (6-sum) > 3 ) {
 				printf("something fucked up, trying to set invalid value %d\n", 6-sum);
 				return false;
 			}
-			tris[i+toColor]->setColor(6-sum);
-		}
-	}
+			(*(current+toColor))->setColor(6-sum);
 
+			colored++;
+			lastColored = current;
+		}
+		current += 3;
+		if(current > (&tris[0] + tris.size()-1))
+			current = &tris[0];
+	}
 	return true;
+}
+
+bool SimplePolygon::adjacent(Vector **tri1, Vector **tri2)
+{
+	Vector t1a = **tri1;
+	Vector t1b = **(tri1+1);
+	Vector t1c = **(tri1+2);
+	Vector t2a = **(tri2);
+	Vector t2b = **(tri2+1);
+	Vector t2c = **(tri2+2);
+
+	if( (t1a == t2a || t1a == t2b || t1a == t2c) && (t1b == t2a || t1b == t2b || t1b == t2c) )
+		return true;
+	if( (t1a == t2a || t1a == t2b || t1a == t2c) && (t1c == t2a || t1c == t2b || t1c == t2c) )
+		return true;
+	if( (t1b == t2a || t1b == t2b || t1b == t2c) && (t1c == t2a || t1c == t2b || t1c == t2c) )
+		return true;
+
+	return false;
 }

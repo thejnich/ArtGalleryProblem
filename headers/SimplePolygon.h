@@ -24,7 +24,8 @@ private:
 	vector<Vector> *vertices;	
 	vector<Vector*> *triVerts;
 	int findPoint(Vector v);
-	bool threeColor(const vector<Vector*> &tris);
+	bool threeColor(vector<Vector*> &tris);
+	bool adjacent(Vector **tri1, Vector **tri2);
 };
 
 #endif /* _SIMPLE_POLYGON_H */
