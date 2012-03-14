@@ -34,11 +34,8 @@ bool Triangulate::Process(vector<Vector> &polygon, vector<Vector*> &result)
 		if( Snip(workingPoly, u,v,w) ) {
 			// add triangle uvw to result, remove v from working set
 			result.push_back(workingPoly[u]);
-			result.back()->setColor(0);
 			result.push_back(workingPoly[v]);
-			result.back()->setColor(0);
 			result.push_back(workingPoly[w]);
-			result.back()->setColor(0);
 			workingPoly.erase(workingPoly.begin() + v);
 		}
 		else

@@ -118,8 +118,9 @@ void SimplePolygon::Update(Vector v, bool remove)
 			(*vertices)[closestPointIndex].update(v.getx(), v.gety());
 		}
 	}
+	
 	Triangulate::Process(*vertices, *triVerts);	
-//	threeColor(*triVerts);
+	threeColor(*triVerts);
 }
 
 /* every three vectors in tris represents one triangle
@@ -128,14 +129,23 @@ void SimplePolygon::Update(Vector v, bool remove)
  * have different color, so each triangle will have a vertex of 
  * each color
  */
- /* TODO This fucking peice of garbage is not currently working!!! */
-bool SimplePolygon::threeColor(vector<Vector*> &tris)
+ /* TODO This fucking peice of garbage is not currently working!!! 
+  * BUGFOUND: this alg assums each successive triangle shares an
+  * edge with the previous triangle. This IS NOT guaranteed by the
+  * current triangulation implementation, so the alg fails in certain
+  * situations. My need a half edge data structure or something so 
+  * adjacent tris can be walked for the coloring
+  */ 
+bool SimplePolygon::threeColor(const vector<Vector*> &tris)
 {
 
 	printf("\n\nEntering threeColor this peice of shit\n");
-	printf("size of tris: %d\n", tris.size());
 	if(tris.size() < 3)
 		return true;
+	// reset previous coloring
+	for(int i = 0; i < (int)tris.size(); ++i) {
+		tris[i]->setColor(0);
+	}
 
 	for(int i = 0; i < (int)tris.size()-2; i+=3) {
 	

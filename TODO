@@ -2,4 +2,5 @@ modify so that polygon is always a simple polygon
 	current implementation is not correct!
 DONE implement triangulation algorithm
 NOT WORKING implement 3-coloring
+	BUG: assumes adgacent tris, not always the case
 place guards based on coloring
