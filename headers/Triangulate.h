@@ -1,8 +1,12 @@
 /*
  * Based on code submitted to FlipCode.com by
- * John W. Ratcliff (jratcliff@verant.com) on July 22, 2000 
+ * John W. Ratcliff (jratcliff@verant.com) on July 22, 2000
  *
  * modified by Jeff Nicholson, March 13, 2012
+ * In Process, changed original implementation to use a working
+ * set of vertices rather than complicated array of indexes, which
+ * provided no real savings, since we are duplicating vertices to 
+ * result anyways.
  */
 
 #ifndef _TRIANGULATE_H
