@@ -50,3 +50,34 @@ bool Triangulate::SameSide(Vector a, Vector b, Vector p1, Vector p2)
 	// they are positive.
 	return ( Vector::crossProduct(v, (p1 - a)).getz() * Vector::crossProduct(v, (p2 - a)).getz() ) >= 0;
 }
+
+
+/* determines if the section of the polygon defined by the three vertices
+ * abc (where abc are at indices V[u,v,w] in polygon) can be 
+ * 'snipped' (considered a triangle in the triangulation of the polygon).
+ * True if abc is convex and empty, false if another vertex of the polygon lies within
+ * abc, or if abc forms a right turn (non-convex, assuming counter clockwise (ccw) traversal).
+ * V is an array of integers, containing the indices of polygon in ccw order, n is its length
+ */
+bool Triangulate::Snip(const vector<Vector> &polygon, int u, int v, int w, int n, const int V[])
+{
+	Vector a = polygon[V[u]];
+	Vector b = polygon[V[v]];
+	Vector c = polygon[V[w]];
+
+	// if abc forms a right turn, cannot snip
+	if( Vector::crossProduct( (b-a), (c-b) ).getz() >= 0 )
+		return false;
+	
+	Vector p;
+	// check if any other points of polygon are inside abc
+	for(int i = 0; i < n; ++i) {
+		if( i == u || i == v || i == w )
+			continue;
+		p = polygon[V[i]];
+		if(InsideTriangle(a,b,c,p))
+			return false;
+	}
+
+	return true;	
+}
