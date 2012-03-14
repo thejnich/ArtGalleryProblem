@@ -14,6 +14,7 @@
 #define VECTOR_H
 
 #include <cmath>
+#include <assert.h>
 #define PI 3.141592
 
 class Vector
@@ -40,9 +41,12 @@ public:
 	static float getDistance (Vector v1, Vector v2);
 
 	float norm();
+	int getColor() const {return color;};
+	void setColor(int);
 
 private:
 	float x, y, z, w, angle;
+	int color;
 };
 
 #endif /* VECTOR_H */

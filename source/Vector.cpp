@@ -29,6 +29,7 @@ Vector::Vector (float newX, float newY, float newZ, float newW)
 	z=newZ;
 	w=newW;
 	angle = getAngle(this);
+	color = 0;
 }
 
 void Vector::update(float newX, float newY)
@@ -94,4 +95,11 @@ float Vector::getAngle(Vector* const v)
 float Vector::getDistance (Vector v1, Vector v2)
 {
 	return sqrt(((v2.x-v1.x)*(v2.x-v1.x))+((v2.y-v1.y)*(v2.y-v1.y))+((v2.z-v1.z)*(v2.z-v1.z)));
+}
+
+void Vector::setColor(int c)
+{
+	if(c != 0 || c != 1 || c != 2 || c != 3)
+		assert(false);
+	color = c;
 }
