@@ -1,6 +1,7 @@
-modify so that polygon is always a simple polygon
-	current implementation is not correct!
-DONE implement triangulation algorithm
 NOT WORKING implement 3-coloring
 	BUG: Goes into infinite loop on more complex polys (non convex) 
+	current implementation is not correct!
+modify so that polygon is always a simple polygon
 place guards based on coloring
+add toggles for triangulation/coloring??
+DONE implement triangulation algorithm
