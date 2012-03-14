@@ -1,5 +1,8 @@
 Application for visualizing the Art Gallery Problem
 
+Dependencies:
+QT
+
 To build:
 qmake (generates the Makefile)
 make (build)
