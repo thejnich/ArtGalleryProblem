@@ -26,6 +26,8 @@ public:
 	
 public slots:
 	void clearPolygon();
+	void toggleTriangulate(bool state);
+	void toggleColor(bool state);
 
 signals:
 

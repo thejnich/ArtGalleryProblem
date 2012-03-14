@@ -9,6 +9,8 @@ SimplePolygon::SimplePolygon()
 {
 	vertices = new vector<Vector>();
 	triVerts = new vector<Vector*>();
+	_triangulate = false;
+	_color = false;
 }
 
 SimplePolygon::~SimplePolygon()
@@ -23,36 +25,43 @@ void SimplePolygon::DrawPolygon()
 	glPointSize(10.0);
 	glBegin(GL_POINTS);
 	for(vector<Vector>::iterator it = vertices->begin(); it != vertices->end(); ++it) {
-		switch(it->getColor()) {
-			case 1:
-				glColor3f(1.f,0.f,0.f);
-				break;
-			case 2:
-				glColor3f(0.f,1.f,0.f);
-				break;
-			case 3:
-				glColor3f(1.f,0.f,1.f);
-				break;
-			default:
-				glColor3f(1.f,1.f,0.f);
+		if(_color) {
+			switch(it->getColor()) {
+				case 1:
+					glColor3f(1.f,0.f,0.f);
+					break;
+				case 2:
+					glColor3f(0.f,1.f,0.f);
+					break;
+				case 3:
+					glColor3f(1.f,0.f,1.f);
+					break;
+				default:
+					glColor3f(1.f,1.f,0.f);
+			}
+		}
+		else {
+			glColor3f(1.f,1.f,0.f);
 		}
 		glVertex3f(it->getx(), it->gety(), it->getz());
 	}
 	glEnd();
-	
-	// render triangulation of polygon
-	glColor3f(0.f,0.f,1.f);
-	glLineWidth(2);
-	if(triVerts->size() > 2) {
-		for(int i = 0; i < (int)triVerts->size()-2; i+=3) {
-			Vector a = *(*triVerts)[i];
-			Vector b = *(*triVerts)[i+1];
-			Vector c = *(*triVerts)[i+2];
-			glBegin(GL_LINE_LOOP);
-			glVertex3f(a.getx(), a.gety(), a.getz());
-			glVertex3f(b.getx(), b.gety(), b.getz());
-			glVertex3f(c.getx(), c.gety(), c.getz());
-			glEnd();
+
+	if(_triangulate) {
+		// render triangulation of polygon
+		glColor3f(0.f,0.f,1.f);
+		glLineWidth(2);
+		if(triVerts->size() > 2) {
+			for(int i = 0; i < (int)triVerts->size()-2; i+=3) {
+				Vector a = *(*triVerts)[i];
+				Vector b = *(*triVerts)[i+1];
+				Vector c = *(*triVerts)[i+2];
+				glBegin(GL_LINE_LOOP);
+				glVertex3f(a.getx(), a.gety(), a.getz());
+				glVertex3f(b.getx(), b.gety(), b.getz());
+				glVertex3f(c.getx(), c.gety(), c.getz());
+				glEnd();
+			}
 		}
 	}
 
@@ -118,9 +127,17 @@ void SimplePolygon::Update(Vector v, bool remove)
 			(*vertices)[closestPointIndex].update(v.getx(), v.gety());
 		}
 	}
-	
-	Triangulate::Process(*vertices, *triVerts);	
-	threeColor(*triVerts);
+	Update();
+}
+
+void SimplePolygon::Update()
+{
+	// have to triangulate in order to color
+	if(_triangulate) {
+		Triangulate::Process(*vertices, *triVerts);	
+		if(_color)
+			threeColor(*triVerts);
+	}
 }
 
 /* every three vectors in tris represents one triangle

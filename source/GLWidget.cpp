@@ -133,3 +133,15 @@ void GLWidget::clearPolygon()
 		return;
 	polygon->Clear();
 }
+
+void GLWidget::toggleTriangulate(bool state)
+{
+	polygon->setTriangulate(state);
+	polygon->Update();
+}
+
+void GLWidget::toggleColor(bool state)
+{
+	polygon->setColored(state);
+	polygon->Update();
+}

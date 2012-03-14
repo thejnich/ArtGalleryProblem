@@ -27,6 +27,8 @@ private:
 	QVBoxLayout *controlLayout;
 
 	QPushButton *clearPolyButton;
+	QPushButton *toggleTriangulateButton;
+	QPushButton *toggleColorButton;
 };
 
 #endif /* _WINDOW_H */

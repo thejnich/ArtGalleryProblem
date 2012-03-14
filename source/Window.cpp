@@ -26,8 +26,18 @@ Window::Window(QWidget *parent) : QMainWindow(parent)
 	clearPolyButton = new QPushButton("Clear");
 	connect(clearPolyButton, SIGNAL(clicked()), glWidget, SLOT(clearPolygon()));
 
+	toggleTriangulateButton = new QPushButton("Triangulate");
+	toggleTriangulateButton->setCheckable(true);
+	connect(toggleTriangulateButton, SIGNAL(toggled(bool)), glWidget, SLOT(toggleTriangulate(bool)));
+
+	toggleColorButton = new QPushButton("Three Color");
+	toggleColorButton->setCheckable(true);
+	connect(toggleColorButton, SIGNAL(toggled(bool)), glWidget, SLOT(toggleColor(bool)));
+
 	// add controls to controlLayout
 	controlLayout->addWidget(clearPolyButton);
+	controlLayout->addWidget(toggleTriangulateButton);
+	controlLayout->addWidget(toggleColorButton);
 
 	// add main widgets and layouts
 	mainLayout->addWidget(glWidget);
