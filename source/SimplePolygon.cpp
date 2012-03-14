@@ -130,12 +130,13 @@ void SimplePolygon::Update(Vector v, bool remove)
  * each color
  */
  /* TODO Almost working, but not quite
-  * Am now just brute forcing, but still not working
+  * Am now just brute forcing, but still not working, gets into
+  * infinite loop on more complex polygons
   */ 
 bool SimplePolygon::threeColor(vector<Vector*> &tris)
 {
 
-	printf("\n\nEntering threeColor this peice of shit\n");
+	printf("\n\nEntering threeColor\n");
 	if(tris.size() < 3)
 		return true;
 	// reset previous coloring
@@ -151,7 +152,6 @@ bool SimplePolygon::threeColor(vector<Vector*> &tris)
 	}
 
 	int colored = 1;
-
 
 	Vector **lastColored = &tris[0];
 	Vector **current = &tris[3];
@@ -171,19 +171,25 @@ bool SimplePolygon::threeColor(vector<Vector*> &tris)
 				else
 					sum += v->getColor();
 			}
-
-			if( (6-sum) <= 0 || (6-sum) > 3 ) {
-				printf("something fucked up, trying to set invalid value %d\n", 6-sum);
-				return false;
+			if( sum != 6 ) {
+				(*(current+toColor))->setColor(6-sum);
+				colored++;
+				lastColored = current;
 			}
-			(*(current+toColor))->setColor(6-sum);
-
-			colored++;
-			lastColored = current;
+			else {
+				// already colored, keep looking
+				printf("already colored,keep going\n");
+			}
 		}
 		current += 3;
-		if(current > (&tris[0] + tris.size()-1))
+		if(current == lastColored)
+			current += 3;
+		if(current > (&tris[0] + tris.size()-1)) {
 			current = &tris[0];
+			if(current == lastColored)
+				current += 3;
+		}
+		printf("colored %d of %d\n", colored, numTris);
 	}
 	return true;
 }
