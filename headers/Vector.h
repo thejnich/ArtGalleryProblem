@@ -15,6 +15,7 @@
 
 #include <cmath>
 #include <assert.h>
+#include <stdio.h>
 #define PI 3.141592
 
 class Vector

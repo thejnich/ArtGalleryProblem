@@ -99,7 +99,9 @@ float Vector::getDistance (Vector v1, Vector v2)
 
 void Vector::setColor(int c)
 {
-	if(c != 0 || c != 1 || c != 2 || c != 3)
+	if(c != 0 && c != 1 && c != 2 && c != 3){
+		printf("Trying to set with invalid color value %d.\nValid values are 0,1,2,3\n", c);
 		assert(false);
+	}
 	color = c;
 }

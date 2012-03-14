@@ -23,7 +23,7 @@ class Triangulate {
 
 public:
 	/* Puts vertices of triangulation of polygon into result */
-	static bool Process(const vector<Vector> &polygon, vector<Vector> &result);
+	static bool Process( vector<Vector> &polygon, vector<Vector*> &result);
 	
 	/* returns area of polygon */
 	static float Area(const vector<Vector> &polygon);
@@ -42,7 +42,7 @@ private:
 	 * abc, or if abc forms a right turn (non-convex, assuming counter clockwise (ccw) traversal).
 	 * V is an array of integers, containing the indices of polygon in ccw order, n is its length
 	 */
-	 static bool Snip(const vector<Vector> &polygon, int u, int v, int w); 
+	 static bool Snip(const vector<Vector*> &polygon, int u, int v, int w); 
 };
 
 #endif /* _TRIANGULATE_H */

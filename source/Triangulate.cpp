@@ -1,7 +1,7 @@
 #include "Triangulate.h"
 
 /* Puts vertices of triangulation of polygon into result */
-bool Triangulate::Process(const vector<Vector> &polygon, vector<Vector> &result)
+bool Triangulate::Process(vector<Vector> &polygon, vector<Vector*> &result)
 {
 	result.clear();
 	int n = polygon.size();
@@ -9,18 +9,18 @@ bool Triangulate::Process(const vector<Vector> &polygon, vector<Vector> &result)
 	if(n < 3)
 		return false;
 
-	vector<Vector> workingPoly;
+	vector<Vector*> workingPoly;
 
 	// need to ensure that we traverse polygon in ccw order, workingPoly
 	// will contain vertices in ccw order
 	if(Area(polygon) > 0.f) {
 		for(int i = 0; i < n; ++i) {
-			workingPoly.push_back(polygon[i]);
+			workingPoly.push_back(&polygon[i]);
 		}
 	}
 	else {
 		for(int i = 0; i < n; ++i) {
-			workingPoly.push_back(polygon[(n-1)-i]);
+			workingPoly.push_back(&polygon[(n-1)-i]);
 		}
 	}
 	assert(n = workingPoly.size());
@@ -34,8 +34,11 @@ bool Triangulate::Process(const vector<Vector> &polygon, vector<Vector> &result)
 		if( Snip(workingPoly, u,v,w) ) {
 			// add triangle uvw to result, remove v from working set
 			result.push_back(workingPoly[u]);
+			result.back()->setColor(0);
 			result.push_back(workingPoly[v]);
+			result.back()->setColor(0);
 			result.push_back(workingPoly[w]);
+			result.back()->setColor(0);
 			workingPoly.erase(workingPoly.begin() + v);
 		}
 		else
@@ -104,11 +107,11 @@ bool Triangulate::SameSide(Vector a, Vector b, Vector p1, Vector p2)
  * abc, or if abc forms a right turn (non-convex, assuming counter clockwise (ccw) traversal).
  * V is an array of integers, containing the indices of polygon in ccw order, n is its length
  */
-bool Triangulate::Snip(const vector<Vector> &polygon, int u, int v, int w)
+bool Triangulate::Snip(const vector<Vector*> &polygon, int u, int v, int w)
 {
-	Vector a = polygon[u];
-	Vector b = polygon[v];
-	Vector c = polygon[w];
+	Vector a = *polygon[u];
+	Vector b = *polygon[v];
+	Vector c = *polygon[w];
 	// if abc forms a right turn, cannot snip
 	if( Vector::crossProduct( (b-a), (c-b) ).getz() <= 0 )
 		return false;
@@ -117,7 +120,7 @@ bool Triangulate::Snip(const vector<Vector> &polygon, int u, int v, int w)
 	for(int i = 0; i < (int)polygon.size(); ++i) {
 		if( i == u || i == v || i == w )
 			continue;
-		p = polygon[i];
+		p = *polygon[i];
 		if(InsideTriangle(a,b,c,p))
 			return false;
 	}

@@ -8,7 +8,7 @@ bool comparePolarAngle(Vector a, Vector b)
 SimplePolygon::SimplePolygon()
 {
 	vertices = new vector<Vector>();
-	triVerts = new vector<Vector>();
+	triVerts = new vector<Vector*>();
 }
 
 SimplePolygon::~SimplePolygon()
@@ -21,9 +21,21 @@ void SimplePolygon::DrawPolygon()
 {
 	// render vertices of polygon
 	glPointSize(10.0);
-	glColor3f(1.0,1.0,0);
 	glBegin(GL_POINTS);
 	for(vector<Vector>::iterator it = vertices->begin(); it != vertices->end(); ++it) {
+		switch(it->getColor()) {
+			case 1:
+				glColor3f(1.f,0.f,0.f);
+				break;
+			case 2:
+				glColor3f(0.f,1.f,0.f);
+				break;
+			case 3:
+				glColor3f(1.f,0.f,1.f);
+				break;
+			default:
+				glColor3f(1.f,1.f,0.f);
+		}
 		glVertex3f(it->getx(), it->gety(), it->getz());
 	}
 	glEnd();
@@ -33,9 +45,9 @@ void SimplePolygon::DrawPolygon()
 	glLineWidth(2);
 	if(triVerts->size() > 2) {
 		for(int i = 0; i < (int)triVerts->size()-2; i+=3) {
-			Vector a = (*triVerts)[i];
-			Vector b = (*triVerts)[i+1];
-			Vector c = (*triVerts)[i+2];
+			Vector a = *(*triVerts)[i];
+			Vector b = *(*triVerts)[i+1];
+			Vector c = *(*triVerts)[i+2];
 			glBegin(GL_LINE_LOOP);
 			glVertex3f(a.getx(), a.gety(), a.getz());
 			glVertex3f(b.getx(), b.gety(), b.getz());
@@ -107,6 +119,53 @@ void SimplePolygon::Update(Vector v, bool remove)
 		}
 	}
 	Triangulate::Process(*vertices, *triVerts);	
+//	threeColor(*triVerts);
 }
 
+/* every three vectors in tris represents one triangle
+ * in a triangulation. This function three colors this
+ * triangulation, ie any two vertices that share an edge
+ * have different color, so each triangle will have a vertex of 
+ * each color
+ */
+ /* TODO This fucking peice of garbage is not currently working!!! */
+bool SimplePolygon::threeColor(vector<Vector*> &tris)
+{
 
+	printf("\n\nEntering threeColor this peice of shit\n");
+	printf("size of tris: %d\n", tris.size());
+	if(tris.size() < 3)
+		return true;
+
+	for(int i = 0; i < (int)tris.size()-2; i+=3) {
+	
+		int sum = 0;
+		int toColor;
+		Vector *v;
+		for(int j = 0; j < 3; ++j) {
+			v = tris[i+j];
+			if(v->getColor() == 0)
+				toColor = j;
+			else
+				sum += v->getColor();
+		}
+		// if the sum is 0, this is the first tri, so we just color them 1,2,3
+		if(sum == 0) {
+			for(int j = 0; j < 3; ++j) {
+				tris[i+j]->setColor(j+1);
+			}
+		}
+		// all other cases, only one vertex should be uncolored
+		// the other two are either sum = 1+2; 1+3; 2+3
+		// in each case this vertex should be 6-sum
+		else {
+			if( (6-sum) <= 0 || (6-sum) > 3 ) {
+				printf("something fucked up, trying to set invalid value %d\n", 6-sum);
+				return false;
+			}
+			tris[i+toColor]->setColor(6-sum);
+		}
+	}
+
+	return true;
+}

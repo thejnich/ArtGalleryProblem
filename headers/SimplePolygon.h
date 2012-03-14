@@ -22,8 +22,9 @@ public:
 
 private:
 	vector<Vector> *vertices;	
-	vector<Vector> *triVerts;
+	vector<Vector*> *triVerts;
 	int findPoint(Vector v);
+	bool threeColor(vector<Vector*> &tris);
 };
 
 #endif /* _SIMPLE_POLYGON_H */
