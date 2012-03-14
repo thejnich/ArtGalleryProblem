@@ -1,5 +1,5 @@
 #include "GLWidget.h"
-
+#include "Triangulate.h"
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
 	polygon = new SimplePolygon();

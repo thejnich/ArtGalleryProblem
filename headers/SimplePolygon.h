@@ -5,6 +5,7 @@
 #include <QtOpenGL>
 
 #include "Vector.h"
+#include "Triangulate.h"
 
 #define MAX_DIST 0.1
 

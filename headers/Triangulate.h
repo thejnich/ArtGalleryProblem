@@ -27,7 +27,8 @@ public:
 	static bool InsideTriangle(Vector a, Vector b, Vector c, Vector p);
 
 private:
-
+	/* true if points p1 and p2 are on the same side of line segment ab */
+	static bool SameSide(Vector a, Vector b, Vector p1, Vector p2);
 };
 
 #endif /* _TRIANGULATE_H */

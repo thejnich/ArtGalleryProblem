@@ -23,11 +23,11 @@ public:
 	Vector (float newX, float newY, float newZ, float newW);
 
 	void update(float x, float y);
-	float getx();
-	float gety();
-	float getz();
-	float getw();
-	float getangle();
+	float getx() const {return x;};
+	float gety() const {return y;};
+	float getz() const {return z;};
+	float getw() const {return w;};
+	float getangle() const {return angle;};
 	Vector operator+ (Vector v);
 	Vector operator- (Vector v);
 	Vector operator* (float s);

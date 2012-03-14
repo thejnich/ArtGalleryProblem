@@ -38,12 +38,6 @@ void Vector::update(float newX, float newY)
 	angle = getAngle(this);
 }
 
-float Vector::getx() {return x;}
-float Vector::gety() {return y;}
-float Vector::getz() {return z;}
-float Vector::getw() {return w;}
-float Vector::getangle() {return angle;}
-
 Vector Vector::operator+ (Vector v)
 {
 	return Vector (x+v.x, y+v.y, z+v.z, w+v.w);
