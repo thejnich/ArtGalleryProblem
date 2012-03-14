@@ -9,6 +9,7 @@
 #define _TRIANGULATE_H
 
 #include <vector>
+#include <assert.h>
 
 #include "Vector.h"
 
@@ -31,13 +32,13 @@ private:
 	static bool SameSide(Vector a, Vector b, Vector p1, Vector p2);
 
 	/* determines if the section of the polygon defined by the three vertices
-	 * abc (where abc are at indices V[u,v,w] int polygon) can be 
+	 * abc (where abc are at indices u,v,w in polygon) can be
 	 * 'snipped' (considered a triangle in the triangulation of the polygon).
 	 * True if abc is convex and empty, false if another vertex of the polygon lies within
 	 * abc, or if abc forms a right turn (non-convex, assuming counter clockwise (ccw) traversal).
 	 * V is an array of integers, containing the indices of polygon in ccw order, n is its length
 	 */
-	 static bool Snip(const vector<Vector> &polygon, int u, int v, int w, int n, const int V[]); 
+	 static bool Snip(const vector<Vector> &polygon, int u, int v, int w); 
 };
 
 #endif /* _TRIANGULATE_H */

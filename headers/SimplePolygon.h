@@ -22,6 +22,7 @@ public:
 
 private:
 	vector<Vector> *vertices;	
+	vector<Vector> *triVerts;
 	int findPoint(Vector v);
 };
 
