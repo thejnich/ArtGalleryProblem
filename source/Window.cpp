@@ -11,37 +11,37 @@
 
 Window::Window(QWidget *parent) : QMainWindow(parent)
 {
-	// init
-	setWindowTitle(tr("Art Gallery Problem"));
-	
-	glWidget = new GLWidget;
+   // init
+   setWindowTitle(tr("Art Gallery Problem"));
 
-	centralWidget = new QWidget;
-	setCentralWidget(centralWidget);
-	
-	mainLayout = new QHBoxLayout;
-	controlLayout = new QVBoxLayout;
+   glWidget = new GLWidget;
 
-	// set up buttons
-	clearPolyButton = new QPushButton("Clear");
-	connect(clearPolyButton, SIGNAL(clicked()), glWidget, SLOT(clearPolygon()));
+   centralWidget = new QWidget;
+   setCentralWidget(centralWidget);
 
-	toggleTriangulateButton = new QPushButton("Triangulate");
-	toggleTriangulateButton->setCheckable(true);
-	connect(toggleTriangulateButton, SIGNAL(toggled(bool)), glWidget, SLOT(toggleTriangulate(bool)));
+   mainLayout = new QHBoxLayout;
+   controlLayout = new QVBoxLayout;
 
-	toggleColorButton = new QPushButton("Three Color");
-	toggleColorButton->setCheckable(true);
-	connect(toggleColorButton, SIGNAL(toggled(bool)), glWidget, SLOT(toggleColor(bool)));
+   // set up buttons
+   clearPolyButton = new QPushButton("Clear");
+   connect(clearPolyButton, SIGNAL(clicked()), glWidget, SLOT(clearPolygon()));
 
-	// add controls to controlLayout
-	controlLayout->addWidget(clearPolyButton);
-	controlLayout->addWidget(toggleTriangulateButton);
-	controlLayout->addWidget(toggleColorButton);
+   toggleTriangulateButton = new QPushButton("Triangulate");
+   toggleTriangulateButton->setCheckable(true);
+   connect(toggleTriangulateButton, SIGNAL(toggled(bool)), glWidget, SLOT(toggleTriangulate(bool)));
 
-	// add main widgets and layouts
-	mainLayout->addWidget(glWidget);
-	mainLayout->addLayout(controlLayout);
-	centralWidget->setLayout(mainLayout);
+   toggleColorButton = new QPushButton("Three Color");
+   toggleColorButton->setCheckable(true);
+   connect(toggleColorButton, SIGNAL(toggled(bool)), glWidget, SLOT(toggleColor(bool)));
+
+   // add controls to controlLayout
+   controlLayout->addWidget(clearPolyButton);
+   controlLayout->addWidget(toggleTriangulateButton);
+   controlLayout->addWidget(toggleColorButton);
+
+   // add main widgets and layouts
+   mainLayout->addWidget(glWidget);
+   mainLayout->addLayout(controlLayout);
+   centralWidget->setLayout(mainLayout);
 }
 

@@ -21,33 +21,33 @@
 class Vector
 {
 public:
-	Vector();
-	Vector (float newX, float newY, float newZ, float newW);
+   Vector();
+   Vector (float newX, float newY, float newZ, float newW);
 
-	void update(float x, float y);
-	float getx() const {return x;};
-	float gety() const {return y;};
-	float getz() const {return z;};
-	float getw() const {return w;};
-	float getangle() const {return angle;};
-	Vector operator+ (Vector v);
-	Vector operator- (Vector v);
-	Vector operator* (float s);
-	Vector operator/ (float s);
-	bool operator== (Vector v);
+   void update(float x, float y);
+   float getx() const {return x;};
+   float gety() const {return y;};
+   float getz() const {return z;};
+   float getw() const {return w;};
+   float getangle() const {return angle;};
+   Vector operator+ (Vector v);
+   Vector operator- (Vector v);
+   Vector operator* (float s);
+   Vector operator/ (float s);
+   bool operator== (Vector v);
 
-	static Vector crossProduct (Vector v1, Vector v2);
-	static float getAngle (Vector v1, Vector v2);
-	static float getAngle (Vector* const v);
-	static float getDistance (Vector v1, Vector v2);
+   static Vector crossProduct (Vector v1, Vector v2);
+   static float getAngle (Vector v1, Vector v2);
+   static float getAngle (Vector* const v);
+   static float getDistance (Vector v1, Vector v2);
 
-	float norm();
-	int getColor() const {return color;};
-	void setColor(int);
+   float norm();
+   int getColor() const {return color;};
+   void setColor(int);
 
 private:
-	float x, y, z, w, angle;
-	int color;
+   float x, y, z, w, angle;
+   int color;
 };
 
 #endif /* VECTOR_H */

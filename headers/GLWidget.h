@@ -16,31 +16,31 @@ using std::vector;
 
 class GLWidget : public QGLWidget {
 
-    Q_OBJECT // must include this if you use Qt signals/slots
+   Q_OBJECT // must include this if you use Qt signals/slots
 
 public:
-    GLWidget(QWidget *parent = NULL);
-	~GLWidget();
-	QSize sizeHint() const;
-	QSize minimumSizeHint() const;
+   GLWidget(QWidget *parent = NULL);
+   ~GLWidget();
+   QSize sizeHint() const;
+   QSize minimumSizeHint() const;
 	
 public slots:
-	void clearPolygon();
-	void toggleTriangulate(bool state);
-	void toggleColor(bool state);
+   void clearPolygon();
+   void toggleTriangulate(bool state);
+   void toggleColor(bool state);
 
 signals:
 
 protected:
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void paintGL();
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
+   void initializeGL();
+   void resizeGL(int w, int h);
+   void paintGL();
+   void mousePressEvent(QMouseEvent *event);
+   void mouseMoveEvent(QMouseEvent *event);
 	
 private:
-	QTimer *timer;
-	SimplePolygon *polygon;
+   QTimer *timer;
+   SimplePolygon *polygon;
 };
 
 #endif  /* _GLWIDGET_H */

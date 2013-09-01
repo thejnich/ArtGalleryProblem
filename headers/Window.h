@@ -17,18 +17,18 @@ class Window : public QMainWindow
 {
 
 public:
-	Window(QWidget *parent = NULL);
-	~Window() {}
+   Window(QWidget *parent = NULL);
+   ~Window() {}
 	
 private:
-	QWidget *centralWidget;
-	GLWidget *glWidget;
-	QHBoxLayout *mainLayout;
-	QVBoxLayout *controlLayout;
+   QWidget *centralWidget;
+   GLWidget *glWidget;
+   QHBoxLayout *mainLayout;
+   QVBoxLayout *controlLayout;
 
-	QPushButton *clearPolyButton;
-	QPushButton *toggleTriangulateButton;
-	QPushButton *toggleColorButton;
+   QPushButton *clearPolyButton;
+   QPushButton *toggleTriangulateButton;
+   QPushButton *toggleColorButton;
 };
 
 #endif /* _WINDOW_H */
