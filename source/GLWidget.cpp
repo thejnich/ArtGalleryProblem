@@ -1,5 +1,6 @@
 #include "GLWidget.h"
 
+
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
 {
    polygon = new SimplePolygon();
@@ -8,11 +9,13 @@ GLWidget::GLWidget(QWidget *parent) : QGLWidget(parent)
    timer->start(REFRESH_RATE);
 }
 
+
 GLWidget::~GLWidget()
 {
    delete timer;
    delete polygon;
 }
+
 
 void GLWidget::initializeGL()
 {
@@ -20,6 +23,8 @@ void GLWidget::initializeGL()
    glEnable(GL_NORMALIZE);
    glEnable(GL_DEPTH_TEST);
 }
+
+
 // from Steven Longay, keeps the aspect ratio when resizing window
 void GLWidget::resizeGL(int w, int h)
 {
@@ -89,20 +94,22 @@ void GLWidget::paintGL()
    glFlush();
 }
 
+
 void GLWidget::mousePressEvent(QMouseEvent *event) 
 {
    if(event->type() == QEvent::MouseButtonPress) {
       // create vector based on click position, need to adjust to correct coordinates
-      float xnew = ((float)event->x() / (float)WIDGET_WIDTH) *2 -1;
-      float ynew = ((float)event->y() / (float)WIDGET_HEIGHT) *(-2) +1;
+      float xnew = ((float)event->x() / (float)WIDGET_WIDTH) * 2 - 1;
+      float ynew = ((float)event->y() / (float)WIDGET_HEIGHT) * (-2) + 1;
       float znew = 0.0f;
       float wnew = 1.0f;
 
-      Vector v = Vector(xnew,ynew,znew,wnew);
+      Vector v = Vector(xnew, ynew, znew, wnew);
 
       polygon->Update(v, !(event->button() == Qt::LeftButton));
    }
 }
+
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
@@ -127,11 +134,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
    }
 }
 
+
 void GLWidget::clearPolygon()
 {
-   if(NULL == polygon)
-      return;
-   polygon->Clear();
+   if(NULL != polygon)
+   {
+      polygon->Clear();
+   }
 }
 
 void GLWidget::toggleTriangulate(bool state)
@@ -139,6 +148,7 @@ void GLWidget::toggleTriangulate(bool state)
    polygon->setTriangulate(state);
    polygon->Update();
 }
+
 
 void GLWidget::toggleColor(bool state)
 {
