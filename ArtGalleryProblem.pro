@@ -7,6 +7,8 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += . headers source
 INCLUDEPATH += . headers
+OBJECTS_DIR = temp
+DESTDIR = bin
 
 # Input
 HEADERS += headers/GLWidget.h headers/Window.h headers/Vector.h headers/SimplePolygon.h headers/Triangulate.h
