@@ -107,7 +107,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
       float znew = 0.0f;
       float wnew = 1.0f;
 
-      Vector v = Vector(xnew, ynew, znew, wnew);
+      AGVector v = AGVector(xnew, ynew, znew, wnew);
 
       polygon->Update(v, event->button() != Qt::LeftButton);
    }
@@ -134,7 +134,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
       else if (ynew > 1.0)
          ynew = 1.0f;
 
-      Vector v = Vector(xnew,ynew,znew,wnew);
+      AGVector v = AGVector(xnew,ynew,znew,wnew);
       polygon->Update(v, false);
    }
 }

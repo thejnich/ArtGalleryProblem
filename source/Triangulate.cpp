@@ -1,7 +1,7 @@
 #include "Triangulate.h"
 
 /* Puts vertices of triangulation of polygon into result */
-bool Triangulate::Process(vector<Vector> &polygon, vector<Vector*> &result)
+bool Triangulate::Process(vector<AGVector> &polygon, vector<AGVector *> &result)
 {
    result.clear();
    int n = polygon.size();
@@ -9,7 +9,7 @@ bool Triangulate::Process(vector<Vector> &polygon, vector<Vector*> &result)
    if (n < 3)
       return false;
 
-   vector<Vector*> workingPoly;
+   vector<AGVector *> workingPoly;
 
    // need to ensure that we traverse polygon in ccw order, workingPoly
    // will contain vertices in ccw order
@@ -63,7 +63,7 @@ bool Triangulate::Process(vector<Vector> &polygon, vector<Vector*> &result)
 }
 
 /* returns area of polygon */
-float Triangulate::Area(const vector<Vector> &polygon)
+float Triangulate::Area(const vector<AGVector> &polygon)
 {
    int n = polygon.size();
 
@@ -81,7 +81,7 @@ float Triangulate::Area(const vector<Vector> &polygon)
 }
 
 /* true if p is inside triangle(abc) */
-bool Triangulate::InsideTriangle(Vector a, Vector b, Vector c, Vector p)
+bool Triangulate::InsideTriangle(AGVector a, AGVector b, AGVector c, AGVector p)
 {
    // do p and a lie on same side of line bc
    bool pa = SameSide(b, c, p, a);
@@ -97,16 +97,16 @@ bool Triangulate::InsideTriangle(Vector a, Vector b, Vector c, Vector p)
 }
 
 /* true is points p1, p2 lie on the same side of line segment ab */
-bool Triangulate::SameSide(Vector a, Vector b, Vector p1, Vector p2)
+bool Triangulate::SameSide(AGVector a, AGVector b, AGVector p1, AGVector p2)
 {
    // v is a vector from a to b
-   Vector v = b - a;
+   AGVector v = b - a;
 
    // if the cross product of the vector from a to b, with the vector from a to p1 and a to p2
    // are in the same direction, then p1 and p2 are on the same side. This will be true only
    // when the z components of the crossproducts both positive or both negative, ie when multiplied
    // they are positive.
-   return (Vector::crossProduct(v, (p1 - a)).getz() * Vector::crossProduct(v, (p2 - a)).getz()) >= 0;
+   return (AGVector::crossProduct(v, (p1 - a)).getz() * AGVector::crossProduct(v, (p2 - a)).getz()) >= 0;
 }
 
 /* determines if the section of the polygon defined by the three vertices
@@ -116,16 +116,16 @@ bool Triangulate::SameSide(Vector a, Vector b, Vector p1, Vector p2)
  * abc, or if abc forms a right turn (non-convex, assuming counter clockwise (ccw) traversal).
  * V is an array of integers, containing the indices of polygon in ccw order, n is its length
  */
-bool Triangulate::Snip(const vector<Vector*> &polygon, int u, int v, int w)
+bool Triangulate::Snip(const vector<AGVector *> &polygon, int u, int v, int w)
 {
-   Vector a = *polygon[u];
-   Vector b = *polygon[v];
-   Vector c = *polygon[w];
+   AGVector a = *polygon[u];
+   AGVector b = *polygon[v];
+   AGVector c = *polygon[w];
    // if abc forms a right turn, cannot snip
-   if (Vector::crossProduct( (b-a), (c-b) ).getz() <= 0)
+   if (AGVector::crossProduct( (b-a), (c-b) ).getz() <= 0)
       return false;
 
-   Vector p;
+   AGVector p;
    // check if any other points of polygon are inside abc
    for (int i = 0; i < (int)polygon.size(); ++i)
    {

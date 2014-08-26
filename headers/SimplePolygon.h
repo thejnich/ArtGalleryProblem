@@ -4,7 +4,7 @@
 #include <vector>
 #include <QtOpenGL>
 
-#include "Vector.h"
+#include "AGVector.h"
 #include "Triangulate.h"
 
 #define MAX_DIST 0.1
@@ -18,7 +18,7 @@ public:
    ~SimplePolygon();
    void DrawPolygon();
    void Clear();
-   void Update(Vector v, bool remove);
+   void Update(AGVector v, bool remove);
    void Update();
    bool getTriangulate() {return _triangulate;};
    void setTriangulate(bool b) {_triangulate = b;};
@@ -26,11 +26,11 @@ public:
    void setColored(bool b) {_color = b;};
 
 private:
-   vector<Vector> *vertices;	
-   vector<Vector*> *triVerts;
-   int findPoint(Vector v);
-   bool threeColor(vector<Vector*> &tris);
-   bool adjacent(Vector **tri1, Vector **tri2);
+   vector<AGVector> *vertices;
+   vector<AGVector *> *triVerts;
+   int findPoint(AGVector v);
+   bool threeColor(vector<AGVector *> &tris);
+   bool adjacent(AGVector **tri1, AGVector **tri2);
    bool _triangulate;
    bool _color;
 };

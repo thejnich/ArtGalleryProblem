@@ -19,11 +19,11 @@
 
 static const float PI = 3.141592;
 
-class Vector
+class AGVector
 {
 public:
-   Vector();
-   Vector (float newX, float newY, float newZ, float newW);
+   AGVector();
+   AGVector(float newX, float newY, float newZ, float newW);
 
    void update(float x, float y);
    float getx() const {return x;};
@@ -31,24 +31,24 @@ public:
    float getz() const {return z;};
    float getw() const {return w;};
    float getangle() const {return angle;};
-   Vector operator+ (Vector v);
-   Vector operator- (Vector v);
-   Vector operator* (float s);
-   Vector operator/ (float s);
-   bool operator== (Vector v);
+   AGVector operator+ (AGVector v);
+   AGVector operator- (AGVector v);
+   AGVector operator* (float s);
+   AGVector operator/ (float s);
+   bool operator== (AGVector v);
 
-   static Vector crossProduct (Vector v1, Vector v2);
-   static float getAngle (Vector v1, Vector v2);
-   static float getAngle (Vector* const v);
-   static float getDistance (Vector v1, Vector v2);
+   static AGVector crossProduct (AGVector v1, AGVector v2);
+   static float getAngle (AGVector v1, AGVector v2);
+   static float getAngle (AGVector * const v);
+   static float getDistance (AGVector v1, AGVector v2);
 
    float norm();
-   int getColor() const {return color;};
-   void setColor(int);
+   int getColor() const {return _color;};
+   void setColor(int color);
 
 private:
    float x, y, z, w, angle;
-   int color;
+   int _color;
 };
 
 #endif /* VECTOR_H */

@@ -15,7 +15,7 @@
 #include <vector>
 #include <assert.h>
 
-#include "Vector.h"
+#include "AGVector.h"
 
 using std::vector;
 
@@ -23,17 +23,17 @@ class Triangulate {
 
 public:
    /* Puts vertices of triangulation of polygon into result */
-   static bool Process( vector<Vector> &polygon, vector<Vector*> &result);
+   static bool Process( vector<AGVector> &polygon, vector<AGVector *> &result);
 	
    /* returns area of polygon */
-   static float Area(const vector<Vector> &polygon);
+   static float Area(const vector<AGVector> &polygon);
 	
    /* true if p is inside triangle(abc) */
-   static bool InsideTriangle(Vector a, Vector b, Vector c, Vector p);
+   static bool InsideTriangle(AGVector a, AGVector b, AGVector c, AGVector p);
 
 private:
    /* true if points p1 and p2 are on the same side of line segment ab */
-   static bool SameSide(Vector a, Vector b, Vector p1, Vector p2);
+   static bool SameSide(AGVector a, AGVector b, AGVector p1, AGVector p2);
 
    /* determines if the section of the polygon defined by the three vertices
    * abc (where abc are at indices u,v,w in polygon) can be
@@ -42,7 +42,7 @@ private:
    * abc, or if abc forms a right turn (non-convex, assuming counter clockwise (ccw) traversal).
    * V is an array of integers, containing the indices of polygon in ccw order, n is its length
    */
-    static bool Snip(const vector<Vector*> &polygon, int u, int v, int w); 
+    static bool Snip(const vector<AGVector *> &polygon, int u, int v, int w);
 };
 
 #endif /* _TRIANGULATE_H */

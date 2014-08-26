@@ -10,64 +10,64 @@
  *
  */
 
-#include "Vector.h"
+#include "AGVector.h"
 
 // default constructor
-Vector::Vector()
+AGVector::AGVector()
 {
    x=y=z=w=angle=0.0f;
 }
 
 /*
- * Constructor, takes x,y,z value of vector, and w and creates a Vector with these values.
+ * Constructor, takes x,y,z value of vector, and w and creates a AGVector with these values.
  * w=1 for a point, 0 for a vector representation
  */
-Vector::Vector (float newX, float newY, float newZ, float newW)
+AGVector::AGVector(float newX, float newY, float newZ, float newW)
 {
    x=newX;
    y=newY;
    z=newZ;
    w=newW;
+   _color = 0;
    angle = getAngle(this);
-   color = 0;
 }
 
-void Vector::update(float newX, float newY)
+void AGVector::update(float newX, float newY)
 {
    x = newX;
    y = newY;
    angle = getAngle(this);
 }
 
-Vector Vector::operator+ (Vector v)
+AGVector AGVector::operator+ (AGVector v)
 {
-   return Vector (x+v.x, y+v.y, z+v.z, w+v.w);
+   return AGVector(x+v.x, y+v.y, z+v.z, w+v.w);
 }
 
-Vector Vector::operator- (Vector v)
+AGVector AGVector::operator- (AGVector v)
 {
-   return Vector  (x-v.x, y-v.y, z-v.z, w-v.w);
+   return AGVector(x-v.x, y-v.y, z-v.z, w-v.w);
 }
 
-Vector Vector::operator* (float s)
+AGVector AGVector::operator* (float s)
 {
-   return Vector (x*s, y*s, z*s, w*s);
+   return AGVector(x*s, y*s, z*s, w*s);
 }
 
-Vector Vector::operator/ (float s)
+AGVector AGVector::operator/ (float s)
 {
-   return Vector (x/s, y/s, z/s, w/s);
+   return AGVector(x/s, y/s, z/s, w/s);
 }
 
-bool Vector::operator== (Vector v)
+bool AGVector::operator== (AGVector v)
 {
    return (x == v.x && y==v.y && z==v.z);
 }
 
 // returns a vector perpendicular to both v1 and v2
-Vector Vector::crossProduct (Vector v1, Vector v2)
+AGVector AGVector::crossProduct (AGVector v1, AGVector v2)
 {
-   Vector result;
+   AGVector result;
    result.x = v1.y * v2.z - v1.z * v2.y;
    result.y = v1.z * v2.x - v1.x * v2.z;
    result.z = v1.x * v2.y - v1.y * v2.x;
@@ -75,18 +75,18 @@ Vector Vector::crossProduct (Vector v1, Vector v2)
 }
 
 // length of a vector
-float Vector::norm()
+float AGVector::norm()
 {
    return sqrtf(x*x + y*y + z*z);
 }
 
 // returns the angle in radians between two vectors, v1 and v2 
-float Vector::getAngle (Vector v1, Vector v2)
+float AGVector::getAngle (AGVector v1, AGVector v2)
 {
    return acosf((v1.x*v2.x + v1.y*v2.y + v1.z*v2.z)/(v1.norm()*v2.norm()));
 }
 
-float Vector::getAngle(Vector* const v)
+float AGVector::getAngle(AGVector * const v)
 {
    float ang = acosf(v->getx()/v->norm());
 
@@ -96,19 +96,18 @@ float Vector::getAngle(Vector* const v)
    return ang;
 }
 
-// returns distance between two points, represented by Vector objects
-float Vector::getDistance (Vector v1, Vector v2)
+// returns distance between two points, represented by AGVector objects
+float AGVector::getDistance (AGVector v1, AGVector v2)
 {
    return sqrtf(((v2.x-v1.x)*(v2.x-v1.x))+((v2.y-v1.y)*(v2.y-v1.y))+((v2.z-v1.z)*(v2.z-v1.z)));
 }
 
-void Vector::setColor(int c)
+void AGVector::setColor(int color)
 {
-   if (c != 0 && c != 1 && c != 2 && c != 3)
-   {
-      printf("Trying to set with invalid color value %d.\nValid values are 0,1,2,3\n", c);
+   if (color != 0 && color != 1 && color != 2 && color != 3) {
+      printf("Trying to set with invalid color value %d.\nValid values are 0,1,2,3\n", (int) color);
       assert(false);
    }
 
-   color = c;
+   _color = color;
 }

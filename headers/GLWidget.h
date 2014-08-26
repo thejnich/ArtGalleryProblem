@@ -10,7 +10,7 @@
 #include <QtOpenGL>
 #include <vector>
 
-#include "Vector.h"
+#include "AGVector.h"
 #include "SimplePolygon.h"
 
 #define WIDGET_HEIGHT 800

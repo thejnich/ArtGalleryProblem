@@ -2,8 +2,8 @@
 
 SimplePolygon::SimplePolygon()
 {
-   vertices = new vector<Vector>();
-   triVerts = new vector<Vector*>();
+   vertices = new vector<AGVector>();
+   triVerts = new vector<AGVector *>();
    _triangulate = false;
    _color = false;
 }
@@ -19,7 +19,7 @@ void SimplePolygon::DrawPolygon()
    // render vertices of polygon
    glPointSize(10.0);
    glBegin(GL_POINTS);
-   for (vector<Vector>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+   for (vector<AGVector>::iterator it = vertices->begin(); it != vertices->end(); ++it)
    {
       if (_color) 
       {
@@ -56,9 +56,9 @@ void SimplePolygon::DrawPolygon()
       {
          for (int i = 0; i < (int)triVerts->size()-2; i+=3)
          {
-            Vector a = *(*triVerts)[i];
-            Vector b = *(*triVerts)[i+1];
-            Vector c = *(*triVerts)[i+2];
+            AGVector a = *(*triVerts)[i];
+            AGVector b = *(*triVerts)[i+1];
+            AGVector c = *(*triVerts)[i+2];
             glBegin(GL_LINE_LOOP);
             glVertex3f(a.getx(), a.gety(), a.getz());
             glVertex3f(b.getx(), b.gety(), b.getz());
@@ -72,7 +72,7 @@ void SimplePolygon::DrawPolygon()
    glColor3f(1.0,1.0,0);
    glLineWidth(5);
    glBegin(GL_LINE_LOOP);
-   for (vector<Vector>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+   for (vector<AGVector>::iterator it = vertices->begin(); it != vertices->end(); ++it)
    {
       glVertex3f(it->getx(), it->gety(), it->getz());
    }
@@ -88,7 +88,7 @@ void SimplePolygon::Clear()
    triVerts->clear();
 }
 
-int SimplePolygon::findPoint(Vector v)
+int SimplePolygon::findPoint(AGVector v)
 {
    if (vertices->size() == 0)
    {
@@ -97,13 +97,13 @@ int SimplePolygon::findPoint(Vector v)
 
    // Find the point closest
    int index = 0;
-   float smallestDistance = Vector::getDistance(v, (*vertices)[index]);
+   float smallestDistance = AGVector::getDistance(v, (*vertices)[index]);
 
    // loop through all vertices, tracking which is closest
    float dist;
    for (uint i = 1; i < vertices->size(); i++)
    {
-      dist = Vector::getDistance(v, (*vertices)[i]);
+      dist = AGVector::getDistance(v, (*vertices)[i]);
       if (dist < smallestDistance)
       {
          index = i;
@@ -118,7 +118,7 @@ int SimplePolygon::findPoint(Vector v)
    return index;
 }
 
-void SimplePolygon::Update(Vector v, bool remove)
+void SimplePolygon::Update(AGVector v, bool remove)
 {
    int closestPointIndex = findPoint(v);
 
@@ -162,7 +162,7 @@ void SimplePolygon::Update()
  * Am now just brute forcing, but still not working, gets into
  * infinite loop on more complex polygons
  */ 
-bool SimplePolygon::threeColor(vector<Vector*> &tris)
+bool SimplePolygon::threeColor(vector<AGVector *> &tris)
 {
    printf("\n\nEntering threeColor\n");
    if (tris.size() < 3)
@@ -179,13 +179,15 @@ bool SimplePolygon::threeColor(vector<Vector*> &tris)
    // color the first triangle
    for (int i = 0; i < 3; ++i)
    {
-      tris[i]->setColor(i+1);
+      tris[i]->setColor(i + 1);
    }
 
    int colored = 1;
 
-   Vector **lastColored = &tris[0];
-   Vector **current = &tris[3];
+   AGVector **lastColored = &tris[0];
+   AGVector **current = &tris[3];
+
+   printf("Attempting to color %d triangles", numTris);
 
    // loop until we have colored all the triangles
    while (colored != numTris)
@@ -196,10 +198,10 @@ bool SimplePolygon::threeColor(vector<Vector*> &tris)
          // if adjacent, then we color the remaining vertex of current
          int sum = 0;
          int toColor = 0;
-         Vector *v;
+         AGVector *v;
          for (int j = 0; j < 3; ++j)
          {
-            v = *(current+j); 
+            v = *(current + j);
             if (v->getColor() == 0)
                toColor = j;
             else
@@ -219,15 +221,12 @@ bool SimplePolygon::threeColor(vector<Vector*> &tris)
          }
       }
 
-      current += 3;
-      if (current == lastColored)
+      while (current != lastColored)
+      {
          current += 3;
 
-      if (current > (&tris[0] + tris.size()-1))
-      {
-         current = &tris[0];
-         if (current == lastColored)
-            current += 3;
+         if (current > (&tris[0] + tris.size() - 1))
+            current = &tris[0];
       }
       printf("colored %d of %d\n", colored, numTris);
    }
@@ -235,14 +234,14 @@ bool SimplePolygon::threeColor(vector<Vector*> &tris)
    return true;
 }
 
-bool SimplePolygon::adjacent(Vector **tri1, Vector **tri2)
+bool SimplePolygon::adjacent(AGVector **tri1, AGVector **tri2)
 {
-   Vector t1a = **tri1;
-   Vector t1b = **(tri1+1);
-   Vector t1c = **(tri1+2);
-   Vector t2a = **(tri2);
-   Vector t2b = **(tri2+1);
-   Vector t2c = **(tri2+2);
+   AGVector t1a = **tri1;
+   AGVector t1b = **(tri1+1);
+   AGVector t1c = **(tri1+2);
+   AGVector t2a = **(tri2);
+   AGVector t2b = **(tri2+1);
+   AGVector t2c = **(tri2+2);
 
    if ((t1a == t2a || t1a == t2b || t1a == t2c) && (t1b == t2a || t1b == t2b || t1b == t2c))
       return true;
