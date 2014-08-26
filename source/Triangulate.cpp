@@ -77,7 +77,7 @@ float Triangulate::Area(const vector<Vector> &polygon)
       area += (polygon[p].getx() *polygon[q].gety()) - (polygon[q].getx() * polygon[p].gety()); 
    }
 
-   return area * 0.5;	
+   return area * 0.5f;
 }
 
 /* true if p is inside triangle(abc) */

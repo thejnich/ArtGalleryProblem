@@ -36,13 +36,15 @@ void GLWidget::resizeGL(int w, int h)
    glViewport(0, 0, w, h);
 
    float ratio;
-   if ( w > h ) // In this case the w/h ratio is > 1
+   if ( w > h )
    {
+      // In this case the w/h ratio is > 1
       ratio = (float)w/(float)h;
       glOrtho(-ratio, ratio, -1, 1, -2, 2);
    }
-   else        // In this case the h/w ratio is > 1
+   else
    {
+      // In this case the h/w ratio is > 1
       ratio = (float)h/(float)w;
       glOrtho(-1, 1, -ratio, ratio, -2, 2);
    }
@@ -107,7 +109,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
       Vector v = Vector(xnew, ynew, znew, wnew);
 
-      polygon->Update(v, !(event->button() == Qt::LeftButton));
+      polygon->Update(v, event->button() != Qt::LeftButton);
    }
 }
 

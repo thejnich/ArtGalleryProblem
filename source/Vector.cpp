@@ -77,21 +77,21 @@ Vector Vector::crossProduct (Vector v1, Vector v2)
 // length of a vector
 float Vector::norm()
 {
-   return sqrt(x*x + y*y + z*z);
+   return sqrtf(x*x + y*y + z*z);
 }
 
 // returns the angle in radians between two vectors, v1 and v2 
 float Vector::getAngle (Vector v1, Vector v2)
 {
-   return acos((v1.x*v2.x + v1.y*v2.y + v1.z*v2.z)/(v1.norm()*v2.norm()));
+   return acosf((v1.x*v2.x + v1.y*v2.y + v1.z*v2.z)/(v1.norm()*v2.norm()));
 }
 
 float Vector::getAngle(Vector* const v)
 {
-   float ang = acos(v->getx()/v->norm());
+   float ang = acosf(v->getx()/v->norm());
 
    if (v->gety() < 0)
-      ang = 2*PI - ang;
+      ang = PI * 2.f - ang;
 
    return ang;
 }
@@ -99,7 +99,7 @@ float Vector::getAngle(Vector* const v)
 // returns distance between two points, represented by Vector objects
 float Vector::getDistance (Vector v1, Vector v2)
 {
-   return sqrt(((v2.x-v1.x)*(v2.x-v1.x))+((v2.y-v1.y)*(v2.y-v1.y))+((v2.z-v1.z)*(v2.z-v1.z)));
+   return sqrtf(((v2.x-v1.x)*(v2.x-v1.x))+((v2.y-v1.y)*(v2.y-v1.y))+((v2.z-v1.z)*(v2.z-v1.z)));
 }
 
 void Vector::setColor(int c)

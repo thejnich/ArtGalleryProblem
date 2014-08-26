@@ -1,10 +1,5 @@
 #include "SimplePolygon.h"
 
-bool comparePolarAngle(Vector a, Vector b)
-{
-   return a.getangle() < b.getangle();
-}
-
 SimplePolygon::SimplePolygon()
 {
    vertices = new vector<Vector>();
@@ -200,7 +195,7 @@ bool SimplePolygon::threeColor(vector<Vector*> &tris)
       {
          // if adjacent, then we color the remaining vertex of current
          int sum = 0;
-         int toColor;
+         int toColor = 0;
          Vector *v;
          for (int j = 0; j < 3; ++j)
          {
@@ -213,7 +208,7 @@ bool SimplePolygon::threeColor(vector<Vector*> &tris)
 
          if (sum != 6)
          {
-            (*(current+toColor))->setColor(6-sum);
+            (*(current + toColor))->setColor(6-sum);
             colored++;
             lastColored = current;
          }
