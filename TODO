@@ -3,5 +3,5 @@ NOT WORKING implement 3-coloring
 	current implementation is not correct!
 modify so that polygon is always a simple polygon
 place guards based on coloring
-DOME add toggles for triangulation/coloring??
+DONE add toggles for triangulation/coloring??
 DONE implement triangulation algorithm
