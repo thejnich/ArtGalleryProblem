@@ -4,3 +4,7 @@ Makefile
 moc*
 *.swp
 tags
+.idea/
+Info.plist
+ArtGalleryProblem.xcodeproj/*.mak
+ArtGalleryProblem.xcodeproj/xcuserdata/
