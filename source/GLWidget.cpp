@@ -68,16 +68,17 @@ void GLWidget::paintGL()
 {
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glOrtho(-1, 1, -1, 1, -2, 2);	
+   glOrtho(-1, 1, -1, 1, -2, 2);
 
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    // place camera
-   gluLookAt(0, 0, 1,		// camera position
-         0, 0, 0,		// look-at
-         0, 1, 0);		// up-vector
+   gluLookAt(
+         0, 0, 1,   // camera position
+         0, 0, 0,	  // look-at
+         0, 1, 0);  // up-vector
 
    polygon->DrawPolygon();
 
@@ -90,14 +91,14 @@ void GLWidget::paintGL()
    glVertex3f(1.f,0.f,0.f);
    glEnd();
 
-
    glFlush();
 }
 
 
-void GLWidget::mousePressEvent(QMouseEvent *event) 
+void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-   if(event->type() == QEvent::MouseButtonPress) {
+   if (event->type() == QEvent::MouseButtonPress)
+   {
       // create vector based on click position, need to adjust to correct coordinates
       float xnew = ((float)event->x() / (float)WIDGET_WIDTH) * 2 - 1;
       float ynew = ((float)event->y() / (float)WIDGET_HEIGHT) * (-2) + 1;
@@ -113,20 +114,22 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-   if(event->type() == QEvent::MouseMove) {
+   if (event->type() == QEvent::MouseMove)
+   {
       // create vector based on click position, need to adjust to correct coordinates
       float xnew = ((float)event->x() / (float)WIDGET_WIDTH) *2 -1;
       float ynew = ((float)event->y() / (float)WIDGET_HEIGHT) *(-2) +1;
       float znew = 0.0f;
       float wnew = 1.0f;
 
-      if(xnew < (-1.0)) 
+      if (xnew < (-1.0))
          xnew = -1.0f;
-      else if(xnew > 1.0)
+      else if (xnew > 1.0)
          xnew = 1.0f;
-      if(ynew < (-1.0))
+
+      if (ynew < (-1.0))
          ynew = -1.0f;
-      else if(ynew > 1.0)
+      else if (ynew > 1.0)
          ynew = 1.0f;
 
       Vector v = Vector(xnew,ynew,znew,wnew);

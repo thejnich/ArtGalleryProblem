@@ -43,18 +43,22 @@ Vector Vector::operator+ (Vector v)
 {
    return Vector (x+v.x, y+v.y, z+v.z, w+v.w);
 }
+
 Vector Vector::operator- (Vector v)
 {
    return Vector  (x-v.x, y-v.y, z-v.z, w-v.w);
 }
+
 Vector Vector::operator* (float s)
 {
    return Vector (x*s, y*s, z*s, w*s);
 }
+
 Vector Vector::operator/ (float s)
 {
    return Vector (x/s, y/s, z/s, w/s);
 }
+
 bool Vector::operator== (Vector v)
 {
    return (x == v.x && y==v.y && z==v.z);
@@ -85,7 +89,8 @@ float Vector::getAngle (Vector v1, Vector v2)
 float Vector::getAngle(Vector* const v)
 {
    float ang = acos(v->getx()/v->norm());
-   if(v->gety() < 0)
+
+   if (v->gety() < 0)
       ang = 2*PI - ang;
 
    return ang;
@@ -99,9 +104,11 @@ float Vector::getDistance (Vector v1, Vector v2)
 
 void Vector::setColor(int c)
 {
-   if(c != 0 && c != 1 && c != 2 && c != 3){
+   if (c != 0 && c != 1 && c != 2 && c != 3)
+   {
       printf("Trying to set with invalid color value %d.\nValid values are 0,1,2,3\n", c);
       assert(false);
    }
+
    color = c;
 }
