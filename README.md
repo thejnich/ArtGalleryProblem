@@ -3,12 +3,17 @@ Application for visualizing the Art Gallery Problem
 ### Dependencies
 * QT
 
+## Usage
 ### Build
 * qmake (generates the Makefile)
 * make (build)
 
 ### Run
 * ./run
+
+### Or, XCode
+* Should just be able to open and run. xcodeproj was generated with qmake:
+  * qmake -spec macx-xcode
 
 ### Summary
 Given n vertices, which form a polygon (ie the floor plan of an art gallery),
