@@ -1,17 +1,23 @@
 Application for visualizing the Art Gallery Problem
 
-Dependencies:
-QT
+### Dependencies
+* QT
 
-To build:
-qmake (generates the Makefile)
-make (build)
+### Build
+* qmake (generates the Makefile)
+* make (build)
 
+### Run
+* ./run
+
+### Summary
 Given n vertices, which form a polygon (ie the floor plan of an art gallery),
 how do you place the minimum number of guards in such a way that together, the
 guards can see the entire polygon?
+
 There are variations of this problem specifying whether or not the polygon can
 contain holes, and the limitations of the guards.
+
 Initially the goal of this application is to place vertex guards (guards are only 
 placed at vertices of the polygon, they can see 360 degrees, cannot move), in a
 polygon with no holes. This is accomplished by triangulating the polygon, then
