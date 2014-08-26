@@ -1,6 +1,12 @@
 #ifndef _GLWIDGET_H
 #define _GLWIDGET_H
 
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 #include <QtOpenGL>
 #include <vector>
 
