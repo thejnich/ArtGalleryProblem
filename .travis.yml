@@ -1,0 +1,9 @@
+language: cpp
+compiler: clang
+
+install:
+   - sudo apt-get install libqt4-dev qt4-qmake
+
+script:
+   - qmake ArtGalleryProblem.pro
+   - make
