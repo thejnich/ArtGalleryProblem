@@ -161,10 +161,9 @@ void SimplePolygon::Update()
 /* TODO Almost working, but not quite
  * Am now just brute forcing, but still not working, gets into
  * infinite loop on more complex polygons
- */ 
+ */
 bool SimplePolygon::threeColor(vector<AGVector *> &tris)
 {
-   printf("\n\nEntering threeColor\n");
    if (tris.size() < 3)
       return true;
 
@@ -174,6 +173,7 @@ bool SimplePolygon::threeColor(vector<AGVector *> &tris)
       tris[i]->setColor(0);
    }
 
+   assert(tris.size() % 3 == 0);
    int numTris = tris.size() / 3;
 
    // color the first triangle
@@ -184,57 +184,63 @@ bool SimplePolygon::threeColor(vector<AGVector *> &tris)
 
    int colored = 1;
 
-   AGVector **lastColored = &tris[0];
-   AGVector **current = &tris[3];
+   int lastColoredIndex = 0;
+   int currentIndex = 3;
 
    printf("Attempting to color %d triangles", numTris);
 
    // loop until we have colored all the triangles
+   int attempts = 0;
    while (colored != numTris)
    {
+      AGVector **lastColored = &tris[lastColoredIndex];
+      AGVector **current = &tris[currentIndex];
+
       // check if current is adjacent (shares edge) with lastColored
-      if (adjacent(lastColored, current))
+      int adjacentSum = adjacent(lastColored, current);
+      if (adjacentSum > -1)
       {
          // if adjacent, then we color the remaining vertex of current
-         int sum = 0;
-         int toColor = 0;
          AGVector *v;
+         bool didColor = false;
          for (int j = 0; j < 3; ++j)
          {
             v = *(current + j);
             if (v->getColor() == 0)
-               toColor = j;
-            else
-               sum += v->getColor();
+            {
+               v->setColor(6 - adjacentSum);
+               didColor = true;
+               break;
+            }
          }
 
-         if (sum != 6)
+         if (didColor)
          {
-            (*(current + toColor))->setColor(6-sum);
             colored++;
-            lastColored = current;
-         }
-         else
-         {
-            // already colored, keep looking
-            printf("already colored,keep going\n");
+            lastColoredIndex = currentIndex;
          }
       }
 
-      while (current != lastColored)
-      {
-         current += 3;
-
-         if (current > (&tris[0] + tris.size() - 1))
-            current = &tris[0];
-      }
       printf("colored %d of %d\n", colored, numTris);
+
+      currentIndex = (currentIndex + 3) % tris.size();
+      if (currentIndex == lastColoredIndex)
+         currentIndex = (currentIndex + 3) % tris.size();
+
+      attempts++;
+      if (attempts > numTris * 10)
+      {
+         printf("Failed to three color");
+         break;
+      }
    }
 
    return true;
 }
 
-bool SimplePolygon::adjacent(AGVector **tri1, AGVector **tri2)
+// Return positive value is adjacent, value is sum of adjacent sides vertex colors.
+// Return -1 if not adjacent.
+int SimplePolygon::adjacent(AGVector **tri1, AGVector **tri2)
 {
    AGVector t1a = **tri1;
    AGVector t1b = **(tri1+1);
@@ -244,13 +250,13 @@ bool SimplePolygon::adjacent(AGVector **tri1, AGVector **tri2)
    AGVector t2c = **(tri2+2);
 
    if ((t1a == t2a || t1a == t2b || t1a == t2c) && (t1b == t2a || t1b == t2b || t1b == t2c))
-      return true;
+      return t1a.getColor() + t1b.getColor();
 
    if ((t1a == t2a || t1a == t2b || t1a == t2c) && (t1c == t2a || t1c == t2b || t1c == t2c))
-      return true;
+      return t1a.getColor() + t1c.getColor();
 
    if ((t1b == t2a || t1b == t2b || t1b == t2c) && (t1c == t2a || t1c == t2b || t1c == t2c))
-      return true;
+      return t1b.getColor() + t1c.getColor();
 
-   return false;
+   return -1;
 }

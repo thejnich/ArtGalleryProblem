@@ -30,7 +30,7 @@ private:
    vector<AGVector *> *triVerts;
    int findPoint(AGVector v);
    bool threeColor(vector<AGVector *> &tris);
-   bool adjacent(AGVector **tri1, AGVector **tri2);
+   int adjacent(AGVector **tri1, AGVector **tri2);
    bool _triangulate;
    bool _color;
 };
