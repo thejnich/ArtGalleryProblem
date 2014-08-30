@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/thejnich/ArtGalleryProblem.svg?branch=master)](https://travis-ci.org/thejnich/ArtGalleryProblem)
+
 Application for visualizing the Art Gallery Problem
 
 ### Dependencies
