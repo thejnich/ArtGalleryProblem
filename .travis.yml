@@ -6,6 +6,6 @@ install:
    - sudo apt-get install freeglut3-dev
 
 script:
-   - qmake -project
+   - qmake -project QT+=opengl
    - qmake
    - make
