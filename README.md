@@ -3,7 +3,7 @@
 Application for visualizing the Art Gallery Problem
 
 ### Dependencies
-* QT
+* QT, opengl
 
 ## Usage
 ### Build
