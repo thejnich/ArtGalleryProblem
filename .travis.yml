@@ -6,6 +6,6 @@ install:
    - sudo apt-get install freeglut3-dev
 
 script:
-   - qmake -project 'LIBS += -lglut -lGLU -lGL -lm'
+   - qmake -project
    - qmake
    - make
