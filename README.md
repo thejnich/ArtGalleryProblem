@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/thejnich/ArtGalleryProblem.svg?branch=master)](https://travis-ci.org/thejnich/ArtGalleryProblem)
+[![License]http://img.shields.io/badge/license-MIT-lightgrey.svg](http://opensource.org/licenses/MIT)
 
 Application for visualizing the Art Gallery Problem
 
@@ -31,3 +32,6 @@ polygon with no holes. This is accomplished by triangulating the polygon, then
 three coloring the triangulation, picking a color, and placing guards at these
 vertices. This gives you floor(n/3) guards for an n vertex polygon.
 See docs/ArtGallery_NoHoles.pdf for detailed description/proof.
+
+### License
+This software is available under the MIT license. See LICENSE.txt
