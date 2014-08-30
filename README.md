@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/thejnich/ArtGalleryProblem.svg?branch=master)](https://travis-ci.org/thejnich/ArtGalleryProblem)
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](http://opensource.org/licenses/MIT)
+[![Version](http://img.shields.io/badge/version-prototype-yellow.svg)]
 
 Application for visualizing the Art Gallery Problem
 
