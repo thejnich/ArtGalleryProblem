@@ -6,6 +6,7 @@ compiler: clang
 
 install:
    - sudo apt-get install libqt4-opengl qt4-qmake
+   - sudo apt-get install freeglut3
 
 script:
    - qmake -project QT+=opengl 'LIBS += -lglut -lGLU -lGL -lm'
