@@ -22,7 +22,8 @@ using std::vector;
 
 class GLWidget : public QGLWidget {
 
-   Q_OBJECT // must include this if you use Qt signals/slots
+   // Must include this if you use Qt signals/slots.
+   Q_OBJECT 
 
 public:
    GLWidget(QWidget *parent = NULL);
